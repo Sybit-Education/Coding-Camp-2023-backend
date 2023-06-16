@@ -1,0 +1,7 @@
+server:
+  ssl:
+    key-store-password: CodingCamp123
+    key-store: ssl/localhost-ssl.p12
+    key-store-type: PKCS12
+    enabled: true
+

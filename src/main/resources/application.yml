@@ -1,0 +1,31 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:sygotchi;MODE=MYSQL;DATABASE_TO_LOWER=TRUE
+    driverClassName: org.h2.Driver
+    username: admin
+    password:
+  h2:
+    console:
+      path: /db
+      enabled: true
+      settings:
+        web-allow-others: true
+  flyway:
+    locations:
+      - classpath:db/migration
+      - classpath:db/testdata
+  jpa:
+    hibernate:
+      ddl-auto: update
+server:
+  port: 8080
+
+app:
+  jwtSecret: 0152440462302588236434345266344457131377938506810794746748774243064875017894117100198880051919148958
+  jwtExpirationMs: 90000000
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /docs
