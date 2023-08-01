@@ -42,8 +42,9 @@ jobs:
         PASSWORD: ${{ secrets.GITHUB_TOKEN }}
 
   deploy:
-
+    needs: [ build ]
     runs-on: ubuntu-latest
+
     permissions:
       contents: read
       packages: write
