@@ -162,7 +162,18 @@ public class TamagotchiService {
      */
     public Tamagotchi wakeUp() {
         Tamagotchi tamagotchi = getCurrentTamagotchi();
-        // TODO: Wake up your Tamagotchi
+        if (!tamagotchi.isSleeping()) {
+            throw new IllegalStateException("Your Tamagotchi is not sleeping");
+        }
+        Timestamp currentTime = new Timestamp(new Date().getTime());
+        double difference = currentTime.getTime() - tamagotchi.getStartedSleeping().getTime();
+        difference = difference / 10000;
+        if (difference < 100) {
+            tamagotchi.setTired(difference);
+        } else {
+            tamagotchi.setTired(100);
+        }
+
         updateMood(tamagotchi);
         return repository.save(tamagotchi);
     }
