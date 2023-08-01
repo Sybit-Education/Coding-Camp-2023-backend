@@ -173,9 +173,16 @@ public class TamagotchiService {
         } else {
             tamagotchi.setTired(100);
         }
-
         updateMood(tamagotchi);
         return repository.save(tamagotchi);
+    }
+
+    /**
+     * Checks if the tamagochi is sleeping.
+     * @return if the tamagotchi is sleeping
+     */
+    public boolean isSleeping() {
+        return getCurrentTamagotchi().isSleeping();
     }
 
     /**
