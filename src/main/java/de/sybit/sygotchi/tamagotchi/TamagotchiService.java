@@ -1,5 +1,7 @@
 package de.sybit.sygotchi.tamagotchi;
 
+import de.sybit.sygotchi.exception.CooldownException;
+import de.sybit.sygotchi.exception.SleepingException;
 import de.sybit.sygotchi.user.TamagotchiUser;
 import de.sybit.sygotchi.user.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,10 +87,10 @@ public class TamagotchiService {
     public Tamagotchi feed() {
         Tamagotchi tamagotchi = getCurrentTamagotchi();
         if (tamagotchi.isSleeping()) {
-            throw new IllegalStateException("Your Tamagotchi is sleeping");
+            throw new SleepingException("Your Tamagotchi is sleeping");
         }
         if ( tamagotchi.getFeedCooldown() != -1) {
-            throw new IllegalStateException("You can feed again in " + tamagotchi.getFeedCooldown() + " Minutes");
+            throw new CooldownException("You can feed again in " + tamagotchi.getFeedCooldown() + " Minutes");
         }
         tamagotchi.addScore(2);
         tamagotchi.setFeedCooldown(30);
