@@ -1,9 +1,11 @@
-name: Docker
-
 # This workflow uses actions that are not certified by GitHub.
 # They are provided by a third-party and are governed by
 # separate terms of service, privacy policy, and support
 # documentation.
+# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
+
+name: Build and Publish
 
 on:
   push:
@@ -19,11 +21,29 @@ env:
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
 
-
 jobs:
   build:
-
     runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: 'gradle'
+    - name: Build with Gradle
+      run: ./gradlew build --no-daemon
+    - name: Store Artifact
+      uses: actions/upload-artifact@master
+      with:
+        name: build-result
+        path: build/libs
+  publish:
+    needs: [ build ]
+    runs-on: ubuntu-latest
+
     permissions:
       contents: read
       packages: write
@@ -34,7 +54,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
+      - name: Artifacts
+        uses: actions/download-artifact@master
+        with:
+          name: build-result
+          path: build/libs
       # Install the cosign tool except on PR
       # https://github.com/sigstore/cosign-installer
       - name: Install cosign
