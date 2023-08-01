@@ -35,13 +35,8 @@ jobs:
         cache: 'gradle'
     - name: Build with Gradle
       run: ./gradlew build --no-daemon
-    - name: Publish to GitHub Packages
-      run: gradle publish
-      env:
-        USERNAME: ${{ github.actor }}
-        PASSWORD: ${{ secrets.GITHUB_TOKEN }}
 
-  deploy:
+  pubish:
     needs: [ build ]
     runs-on: ubuntu-latest
 
