@@ -52,5 +52,26 @@ public class TamagotchiController {
         return service.createTamagotchi(tamagotchi);
     }
 
+    @PostMapping("sleep")
+    @PreAuthorize("isAuthenticated()")
+    @SecurityRequirement(name = "bearerAuth")
+    public Tamagotchi sleep() {
+        return service.sleep();
+    }
+
+    @PostMapping("wakeUp")
+    @PreAuthorize("isAuthenticated()")
+    @SecurityRequirement(name = "bearerAuth")
+    public Tamagotchi wakeUp() {
+        return service.wakeUp();
+    }
+
+    @PostMapping("isSleeping")
+    @PreAuthorize("isAuthenticated()")
+    @SecurityRequirement(name = "bearerAuth")
+    public Tamagotchi isSpleeping() {
+        return service.isSpleeping();
+    }
+
     // TODO: Implement all other methods from Service here
 }

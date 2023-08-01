@@ -142,7 +142,11 @@ public class TamagotchiService {
      */
     public Tamagotchi sleep() {
         Tamagotchi tamagotchi = getCurrentTamagotchi();
-        // TODO: Put your Tamagotchi to sleep
+        if (tamagotchi.isSleeping()) {
+            throw new IllegalStateException("Your Tamagotchi is already sleeping");
+        }
+        tamagotchi.setSleeping(true);
+        tamagotchi.setStartedSleeping(new Timestamp(new Date().getTime()));
         return repository.save(tamagotchi);
     }
 
