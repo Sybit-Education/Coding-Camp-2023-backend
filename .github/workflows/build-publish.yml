@@ -40,7 +40,7 @@ jobs:
       with:
         name: build-result
         path: build/libs
-  pubish:
+  publish:
     needs: [ build ]
     runs-on: ubuntu-latest
 
