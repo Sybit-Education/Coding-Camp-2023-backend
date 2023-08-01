@@ -35,7 +35,11 @@ jobs:
         cache: 'gradle'
     - name: Build with Gradle
       run: ./gradlew build --no-daemon
-
+    - name: Store Artifact
+      uses: actions/upload-artifact@master
+      with:
+        name: build-result
+        path: build/libs
   pubish:
     needs: [ build ]
     runs-on: ubuntu-latest
@@ -50,7 +54,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
+      - name: Artifacts
+        uses: actions/download-artifact@master
+        with:
+          name: build-result
+          path: build/libs
       # Install the cosign tool except on PR
       # https://github.com/sigstore/cosign-installer
       - name: Install cosign
