@@ -73,7 +73,7 @@ public class TamagotchiService {
      * <p>
      * This method allows the Tamagotchi to be fed and increases its score by 2 if it is not on cooldown.
      * If the Tamagotchi is sleeping, it throws an IllegalStateException with a message "Your Tamagotchi is sleeping".
-     * If the FeedCooldown is not -1, it throws an IllegalStateException with a message "Your can feed again in X Minutes",
+     * If the FeedCooldown is not -1, it throws an IllegalStateException with a message "You can feed again in X Minutes",
      * where X is the remaining minutes before the Tamagotchi can be fed again.
      * When the Tamagotchi is fed, its FeedCooldown is set to 30.
      * After being fed, the Tamagotchi's hunger level is increased by 20 (up to a maximum of 100), and its mood is updated.
@@ -84,7 +84,19 @@ public class TamagotchiService {
      */
     public Tamagotchi feed() {
         Tamagotchi tamagotchi = getCurrentTamagotchi();
-        // TODO: Feed your Tamagotchi
+        if (tamagotchi.isSleeping()) {
+            throw new IllegalStateException("Your Tamagotchi is sleeping");
+        }
+        if ( tamagotchi.getFeedCooldown() != -1) {
+            throw new IllegalStateException("You can feed again in " + tamagotchi.getFeedCooldown() + " Minutes");
+        }
+        tamagotchi.addScore(2);
+        tamagotchi.setFeedCooldown(30);
+        tamagotchi.setHunger(tamagotchi.getHunger() + 20);
+        if (tamagotchi.getHunger() > 100) {
+            tamagotchi.setHunger(100);
+        }
+        updateMood(tamagotchi);
         return repository.save(tamagotchi);
     }
 
