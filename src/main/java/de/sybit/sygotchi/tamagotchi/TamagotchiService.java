@@ -173,6 +173,7 @@ public class TamagotchiService {
         } else {
             tamagotchi.setTired(100);
         }
+        tamagotchi.setSleeping(false);
         updateMood(tamagotchi);
         return repository.save(tamagotchi);
     }
@@ -290,6 +291,7 @@ public class TamagotchiService {
                     tamagotchi.setTired(Math.max(tamagotchi.getTired() - 0.05, 0));
                     if (tamagotchi.getTired() >= 0) {
                         tamagotchi.setSleeping(true);
+                        tamagotchi.setStartedSleeping(new Timestamp(new Date().getTime()));
                     }
                 }
                 autoWakeUp(tamagotchi);
