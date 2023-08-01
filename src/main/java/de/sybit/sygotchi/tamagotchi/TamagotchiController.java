@@ -66,7 +66,7 @@ public class TamagotchiController {
         return service.wakeUp();
     }
 
-    @GetMapping("isSleeping")
+    @GetMapping("sleep")
     @PreAuthorize("isAuthenticated()")
     @SecurityRequirement(name = "bearerAuth")
     public boolean isSleeping() {
