@@ -331,10 +331,16 @@ public class TamagotchiService {
     @Scheduled(cron = "0 0 3 * * *")
     @Async
     public void updateTamagotchiNightly() {
-        // TODO: Update Tamagotchis nightly
-        // TODO: List of all Tamagotchis and update their scores by 20
-        // TODO: check if Tamagotchi is dead and skip if it is
-        // TODO: Save updated Tamagotchi to repository
+        List<Tamagotchi> tamagotchis = repository.findAll();
+        for (Tamagotchi tamagotchi: tamagotchis) {
+            if (tamagotchi.isDead()){
+                continue;
+            }else {
+                tamagotchi.setScore(tamagotchi.getScore()+20);
+                checkDeath(tamagotchi);
+                repository.save(tamagotchi);
+            }
+        }
     }
 
     /**
