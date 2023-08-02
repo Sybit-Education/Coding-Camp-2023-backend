@@ -1,3 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:sygotchi;MODE=MYSQL;DATABASE_TO_LOWER=TRUE
+    driverClassName: org.h2.Driver
+    username: admin
+    password:
+  h2:
+    console:
+      path: /db
+      enabled: true
+      settings:
+        web-allow-others: true
 server:
   ssl:
     key-store-password: CodingCamp123

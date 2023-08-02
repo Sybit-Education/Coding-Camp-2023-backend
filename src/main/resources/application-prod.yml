@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:h2:file:data/db/sygotchi;MODE=MYSQL;DATABASE_TO_LOWER=TRUE
+    driverClassName: org.h2.Driver
+    username: admin
+    password:
+server:
+  servlet:
+    context-path: /api
+  error:
+    include-stacktrace: never
+logging:
+  file:
+    name: log/sygotchi.log
