@@ -6,6 +6,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 /**
  * The TamagotchiController is responsible for handling all requests regarding the Tamagotchi.
  * <p>
@@ -50,6 +52,13 @@ public class TamagotchiController {
     public Tamagotchi createTamagotchi(@RequestBody CreateTamagotchi dto) {
         Tamagotchi tamagotchi = new Tamagotchi(dto.name(), dto.color(), dto.eyes(), dto.shape(), dto.height(), dto.width(), userService.getCurrentUser());
         return service.createTamagotchi(tamagotchi);
+    }
+
+    @PutMapping("feed")
+    @PreAuthorize("isAuthenticated()")
+    @SecurityRequirement(name = "bearerAuth")
+    public Tamagotchi feedTamagotchi() {
+        return service.feed();
     }
 
     @PostMapping("sleep")
