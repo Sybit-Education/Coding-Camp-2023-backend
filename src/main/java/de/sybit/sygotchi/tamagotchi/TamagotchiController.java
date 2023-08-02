@@ -7,6 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 /**
  * The TamagotchiController is responsible for handling all requests regarding the Tamagotchi.
@@ -83,4 +84,12 @@ public class TamagotchiController {
     }
 
     // TODO: Implement all other methods from Service here
+
+    @GetMapping("highscore")
+    @PreAuthorize("isAuthenticated()")
+    @SecurityRequirement(name = "bearerAuth")
+    public List<Tamagotchi> highscore(){
+        return service.getHighScoreList();
+    }
+
 }
