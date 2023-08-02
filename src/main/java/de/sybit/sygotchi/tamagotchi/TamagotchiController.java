@@ -83,6 +83,12 @@ public class TamagotchiController {
         return service.isSleeping();
     }
 
+    @PutMapping("clean")
+    @PreAuthorize("isAuthenticated()")
+    @SecurityRequirement(name = "bearerAuth")
+    public Tamagotchi cleanTamagotchi(){
+        return service.clean();
+    }
     // TODO: Implement all other methods from Service here
 
     @GetMapping("highscore")
