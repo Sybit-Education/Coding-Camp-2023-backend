@@ -213,7 +213,14 @@ public class TamagotchiService {
      */
     public Tamagotchi clean() {
         Tamagotchi tamagotchi = getCurrentTamagotchi();
-        // TODO: Clean your Tamagotchi
+        if (tamagotchi.isSleeping()) {
+            throw new SleepingException("Your Tamagotchi is sleeping");
+        }
+        tamagotchi.addScore(2);
+        tamagotchi.setDirty(tamagotchi.getDirty() + 10);
+        if (tamagotchi.getDirty() > 100){
+            tamagotchi.setDirty(100);
+        }
         updateMood(tamagotchi);
         return repository.save(tamagotchi);
     }
