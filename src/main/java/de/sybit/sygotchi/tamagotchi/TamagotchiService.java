@@ -216,11 +216,11 @@ public class TamagotchiService {
         if (tamagotchi.isSleeping()) {
             throw new SleepingException("Your Tamagotchi is sleeping");
         }
-        tamagotchi.addScore(2);
-        tamagotchi.setDirty(tamagotchi.getDirty() + 10);
-        if (tamagotchi.getDirty() > 100){
-            tamagotchi.setDirty(100);
+        if(tamagotchi.getDirty() > 50){
+            throw new IllegalStateException("Your Tamagotchi is not dirty enough");
         }
+        tamagotchi.addScore(7);
+        tamagotchi.setDirty(100);
         updateMood(tamagotchi);
         return repository.save(tamagotchi);
     }
