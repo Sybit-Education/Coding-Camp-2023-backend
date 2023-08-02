@@ -120,11 +120,13 @@ public class TamagotchiService {
         Tamagotchi tamagotchi = getCurrentTamagotchi();
         if (tamagotchi.isSleeping()) {
             throw new IllegalStateException("Your Tamagotchi is sleeping");
-        } else if (tamagotchi.getDrinkCooldown() != -1) {
+        }
+        if (tamagotchi.getDrinkCooldown() != -1) {
             throw new IllegalStateException("Your Tamagotchi can drink again in " + tamagotchi.getDrinkCooldown() + " Minutes");
         }
-        tamagotchi.setDrinkCooldown(10);
-        tamagotchi.setThirst(tamagotchi.getThirst() +20);
+
+        tamagotchi.setDrinkCooldown(0);
+        tamagotchi.setThirst(Math.min(tamagotchi.getThirst() + 20.0, 100.0));
         tamagotchi.addScore(1);
         updateMood(tamagotchi);
         return repository.save(tamagotchi);
