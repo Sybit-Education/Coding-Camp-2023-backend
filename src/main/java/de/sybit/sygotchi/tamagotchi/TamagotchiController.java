@@ -82,5 +82,12 @@ public class TamagotchiController {
         return service.isSleeping();
     }
 
+    @PutMapping("drink")
+    @PreAuthorize("isAuthenticated()")
+    @SecurityRequirement(name = "bearerAuth")
+    public Tamagotchi drink() {
+        return service.drink();
+    }
+
     // TODO: Implement all other methods from Service here
 }
