@@ -176,8 +176,6 @@ public class TamagotchiService {
     /**
      * This method wakes up the Tamagotchi if it is currently sleeping.
      * If the Tamagotchi is not sleeping, it throws an IllegalStateException with a message "Your Tamagotchi is not sleeping".
-     * The method calculates the amount of time the Tamagotchi has been sleeping and adds it to the Tamagotchi's tiredness level.
-     * The Tamagotchi's tiredness level is capped at 100.
      * After waking up the Tamagotchi and updating its tiredness level, the updated Tamagotchi is saved back to the repository.
      * This method should be called to wake up the Tamagotchi when it is sleeping.
      *
@@ -187,14 +185,6 @@ public class TamagotchiService {
         Tamagotchi tamagotchi = getCurrentTamagotchi();
         if (!tamagotchi.isSleeping()) {
             throw new IllegalStateException("Your Tamagotchi is not sleeping");
-        }
-        Timestamp currentTime = new Timestamp(new Date().getTime());
-        double difference = currentTime.getTime() - tamagotchi.getStartedSleeping().getTime();
-        difference = difference / 10000;
-        if (difference < 100) {
-            tamagotchi.setTired(difference);
-        } else {
-            tamagotchi.setTired(100);
         }
         tamagotchi.setSleeping(false);
         updateMood(tamagotchi);
@@ -319,10 +309,8 @@ public class TamagotchiService {
                 tamagotchi.setDirty(Math.max(tamagotchi.getDirty() - 0.05, 0));
                 if (!tamagotchi.isSleeping()) {
                     tamagotchi.setTired(Math.max(tamagotchi.getTired() - 0.05, 0));
-                    if (tamagotchi.getTired() <= 0) {
-                        tamagotchi.setSleeping(true);
-                        tamagotchi.setStartedSleeping(new Timestamp(new Date().getTime()));
-                    }
+                } else if (tamagotchi.getTired() < 100) {
+                    tamagotchi.setTired(tamagotchi.getTired() + 0.5);
                 }
                 autoWakeUp(tamagotchi);
                 updateMood(tamagotchi);
