@@ -83,13 +83,19 @@ public class TamagotchiController {
         return service.isSleeping();
     }
 
+    @PutMapping("drink")
+    @PreAuthorize("isAuthenticated()")
+    @SecurityRequirement(name = "bearerAuth")
+    public Tamagotchi drink() {
+        return service.drink();
+    }
+
     @PutMapping("clean")
     @PreAuthorize("isAuthenticated()")
     @SecurityRequirement(name = "bearerAuth")
     public Tamagotchi cleanTamagotchi(){
         return service.clean();
     }
-    // TODO: Implement all other methods from Service here
 
     @GetMapping("highscore")
     @PreAuthorize("isAuthenticated()")
@@ -97,5 +103,6 @@ public class TamagotchiController {
     public List<Tamagotchi> highscore(){
         return service.getHighScoreList();
     }
+    // TODO: Implement all other methods from Service here
 
 }

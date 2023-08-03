@@ -107,7 +107,7 @@ public class TamagotchiService {
      * <p>
      * This method allows the Tamagotchi to drink and increases its score by 1 if it is not on cooldown.
      * If the Tamagotchi is sleeping, it throws an IllegalStateException with a message "Your Tamagotchi is sleeping".
-     * If the Drinkcooldown is not -1, it throws an IllegalStateException with a message "Your can drink again in X Minutes",
+     * If the Drinkcooldown is not -1, it throws an IllegalStateException with a message "Your Tamagotchi can drink again in X Minutes",
      * where X is the remaining minutes before the Tamagotchi can drink again.
      * When the Tamagotchi gets something to drink, its DrinkCooldown is set to 10.
      * After drinking, the Tamagotchi's thirst level is increased by 20 (up to a maximum of 100), and its mood is updated.
@@ -118,7 +118,16 @@ public class TamagotchiService {
      */
     public Tamagotchi drink() {
         Tamagotchi tamagotchi = getCurrentTamagotchi();
-        // TODO: Give your Tamagotchi something to drink
+        if (tamagotchi.isSleeping()) {
+            throw new IllegalStateException("Your Tamagotchi is sleeping");
+        }
+        if (tamagotchi.getDrinkCooldown() != -1) {
+            throw new IllegalStateException("Your Tamagotchi can drink again in " + tamagotchi.getDrinkCooldown() + " Minutes");
+        }
+
+        tamagotchi.setDrinkCooldown(10);
+        tamagotchi.setThirst(Math.min(tamagotchi.getThirst() + 20.0, 100.0));
+        tamagotchi.addScore(1);
         updateMood(tamagotchi);
         return repository.save(tamagotchi);
     }
