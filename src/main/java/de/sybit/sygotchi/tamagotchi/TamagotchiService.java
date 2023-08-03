@@ -125,7 +125,7 @@ public class TamagotchiService {
             throw new IllegalStateException("Your Tamagotchi can drink again in " + tamagotchi.getDrinkCooldown() + " Minutes");
         }
 
-        tamagotchi.setDrinkCooldown(0);
+        tamagotchi.setDrinkCooldown(10);
         tamagotchi.setThirst(Math.min(tamagotchi.getThirst() + 20.0, 100.0));
         tamagotchi.addScore(1);
         updateMood(tamagotchi);
