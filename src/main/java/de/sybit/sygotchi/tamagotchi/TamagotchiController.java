@@ -104,7 +104,7 @@ public class TamagotchiController {
         return service.getHighScoreList();
     }
 
-    @GetMapping("play")
+    @PutMapping("play")
     @PreAuthorize("isAuthenticated()")
     @SecurityRequirement(name = "bearerAuth")
     public Tamagotchi play(){
