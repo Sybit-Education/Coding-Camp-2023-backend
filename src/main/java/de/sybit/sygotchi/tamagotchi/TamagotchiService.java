@@ -153,7 +153,7 @@ public class TamagotchiService {
             throw new IllegalStateException("Your Tamagotchi is sleeping");
         }
         if (tamagotchi.getPlayCooldown() != -1) {
-            throw new IllegalStateException("Your Tamagotchi can play again in X Minutes");
+            throw new IllegalStateException("Your Tamagotchi can play again in "+ tamagotchi.getPlayCooldown() +" Minutes");
         }
         tamagotchi.addScore(5);
         tamagotchi.setPlayCooldown(60);
