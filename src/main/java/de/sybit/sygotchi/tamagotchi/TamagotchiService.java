@@ -94,8 +94,8 @@ public class TamagotchiService {
         if ( tamagotchi.getFeedCooldown() != -1) {
             throw new CooldownException("You can feed again in " + tamagotchi.getFeedCooldown() + " Minutes");
         }
-        tamagotchi.addScore(4);
-        tamagotchi.setFeedCooldown(20);
+        tamagotchi.addScore(2);
+        tamagotchi.setFeedCooldown(30);
         tamagotchi.setHunger(tamagotchi.getHunger() + 20);
         if (tamagotchi.getHunger() > 100) {
             tamagotchi.setHunger(100);
@@ -129,7 +129,7 @@ public class TamagotchiService {
 
         tamagotchi.setDrinkCooldown(10);
         tamagotchi.setThirst(Math.min(tamagotchi.getThirst() + 20.0, 100.0));
-        tamagotchi.addScore(2);
+        tamagotchi.addScore(1);
         updateMood(tamagotchi);
         return repository.save(tamagotchi);
     }
@@ -156,8 +156,8 @@ public class TamagotchiService {
         }
 
         if (tamagotchi.getPlayCooldown() == -1) {
-            tamagotchi.setPlayCooldown(30);
-            tamagotchi.addScore(6);
+            tamagotchi.setPlayCooldown(60);
+            tamagotchi.addScore(5);
         } else {
             throw new IllegalStateException("Your can play again in " + tamagotchi.getPlayCooldown() + " Minutes");
         }
@@ -231,10 +231,10 @@ public class TamagotchiService {
         if (tamagotchi.isSleeping()) {
             throw new SleepingException("Your Tamagotchi is sleeping");
         }
-        if(tamagotchi.getDirty() > 70){
+        if(tamagotchi.getDirty() > 50){
             throw new IllegalStateException("Your Tamagotchi is not dirty enough");
         }
-        tamagotchi.addScore(8);
+        tamagotchi.addScore(7);
         tamagotchi.setDirty(100);
         updateMood(tamagotchi);
         return repository.save(tamagotchi);
@@ -313,20 +313,20 @@ public class TamagotchiService {
      * Dirty: 0.05
      * Tired: 0.1
      */
-    @Scheduled(fixedRate = 180000) // 3 Minuten
+    @Scheduled(fixedRate = 60000) // 1 Minuten
     @Async
     public void updateTamagotchi() {
         List<Tamagotchi> tamagotchis = repository.findAll();
         for (Tamagotchi tamagotchi : tamagotchis) {
             if (!tamagotchi.isDead()) {
-                tamagotchi.setHunger(Math.max(tamagotchi.getHunger() - 0.3, 0));
-                tamagotchi.setThirst(Math.max(tamagotchi.getThirst() - 0.9, 0));
-                tamagotchi.setBored(Math.max(tamagotchi.getBored() - 0.15, 0));
-                tamagotchi.setDirty(Math.max(tamagotchi.getDirty() - 0.15, 0));
+                tamagotchi.setHunger(Math.max(tamagotchi.getHunger() - 0.1, 0));
+                tamagotchi.setThirst(Math.max(tamagotchi.getThirst() - 0.3, 0));
+                tamagotchi.setBored(Math.max(tamagotchi.getBored() - 0.05, 0));
+                tamagotchi.setDirty(Math.max(tamagotchi.getDirty() - 0.05, 0));
                 if (!tamagotchi.isSleeping()) {
-                    tamagotchi.setTired(Math.max(tamagotchi.getTired() - 0.15, 0));
-                } else if (tamagotchi.getTired() < 98) {
-                    tamagotchi.setTired(tamagotchi.getTired() + 3);
+                    tamagotchi.setTired(Math.max(tamagotchi.getTired() - 0.05, 0));
+                } else if (tamagotchi.getTired() < 100) {
+                    tamagotchi.setTired(tamagotchi.getTired() + 1);
                 }
                 autoWakeUp(tamagotchi);
                 updateMood(tamagotchi);
@@ -431,28 +431,28 @@ public class TamagotchiService {
      * @param tamagotchi the tamagotchi to update
      */
     public void updateCooldowns(Tamagotchi tamagotchi) {
-        if (tamagotchi.getDrinkCooldown() > 0) {
-            tamagotchi.setDrinkCooldown(-3);
+        if (tamagotchi.getDrinkCooldown() == 0) {
+            tamagotchi.setDrinkCooldown(-1);
         }
 
-        if (tamagotchi.getFeedCooldown() > 0) {
-            tamagotchi.setFeedCooldown(-3);
+        if (tamagotchi.getFeedCooldown() == 0) {
+            tamagotchi.setFeedCooldown(-1);
         }
 
-        if (tamagotchi.getPlayCooldown() > 0) {
-            tamagotchi.setPlayCooldown(-3);
+        if (tamagotchi.getPlayCooldown() == 0) {
+            tamagotchi.setPlayCooldown(-1);
         }
 
-        if (tamagotchi.getDrinkCooldown() > 0) {
-            tamagotchi.setDrinkCooldown(tamagotchi.getDrinkCooldown() - 3);
+        if (tamagotchi.getDrinkCooldown() != -1) {
+            tamagotchi.setDrinkCooldown(tamagotchi.getDrinkCooldown() - 1);
         }
 
-        if (tamagotchi.getFeedCooldown() > 0) {
-            tamagotchi.setFeedCooldown(tamagotchi.getFeedCooldown() - 3);
+        if (tamagotchi.getFeedCooldown() != -1) {
+            tamagotchi.setFeedCooldown(tamagotchi.getFeedCooldown() - 1);
         }
 
-        if (tamagotchi.getPlayCooldown() > 0) {
-            tamagotchi.setPlayCooldown(tamagotchi.getPlayCooldown() - 3);
+        if (tamagotchi.getPlayCooldown() != -1) {
+            tamagotchi.setPlayCooldown(tamagotchi.getPlayCooldown() - 1);
         }
     }
 
