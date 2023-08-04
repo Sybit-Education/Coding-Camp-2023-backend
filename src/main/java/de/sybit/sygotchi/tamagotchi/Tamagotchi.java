@@ -59,19 +59,19 @@ public class Tamagotchi {
     private TamagotchiUser owner;
 
     @Column(name = "hunger", nullable = false)
-    private double hunger = 100;
+    private double hunger = 50;
 
     @Column(name = "thirst", nullable = false)
-    private double thirst = 100;
+    private double thirst = 50;
 
     @Column(name = "bored", nullable = false)
-    private double bored = 100;
+    private double bored = 50;
 
     @Column(name = "tired", nullable = false)
-    private double tired = 100;
+    private double tired = 50;
 
     @Column(name = "dirty", nullable = false)
-    private double dirty = 100;
+    private double dirty = 50;
 
     @Column(name = "feed_cooldown", columnDefinition = "int default -1")
     private int feedCooldown = -1;
