@@ -94,8 +94,8 @@ public class TamagotchiService {
         if ( tamagotchi.getFeedCooldown() != -1) {
             throw new CooldownException("You can feed again in " + tamagotchi.getFeedCooldown() + " Minutes");
         }
-        tamagotchi.addScore(2);
-        tamagotchi.setFeedCooldown(30);
+        tamagotchi.addScore(4);
+        tamagotchi.setFeedCooldown(20);
         tamagotchi.setHunger(tamagotchi.getHunger() + 20);
         if (tamagotchi.getHunger() > 100) {
             tamagotchi.setHunger(100);
@@ -129,7 +129,7 @@ public class TamagotchiService {
 
         tamagotchi.setDrinkCooldown(10);
         tamagotchi.setThirst(Math.min(tamagotchi.getThirst() + 20.0, 100.0));
-        tamagotchi.addScore(1);
+        tamagotchi.addScore(2);
         updateMood(tamagotchi);
         return repository.save(tamagotchi);
     }
@@ -156,8 +156,8 @@ public class TamagotchiService {
         }
 
         if (tamagotchi.getPlayCooldown() == -1) {
-            tamagotchi.setPlayCooldown(60);
-            tamagotchi.addScore(5);
+            tamagotchi.setPlayCooldown(30);
+            tamagotchi.addScore(6);
         } else {
             throw new IllegalStateException("Your can play again in " + tamagotchi.getPlayCooldown() + " Minutes");
         }
@@ -231,10 +231,10 @@ public class TamagotchiService {
         if (tamagotchi.isSleeping()) {
             throw new SleepingException("Your Tamagotchi is sleeping");
         }
-        if(tamagotchi.getDirty() > 50){
+        if(tamagotchi.getDirty() > 70){
             throw new IllegalStateException("Your Tamagotchi is not dirty enough");
         }
-        tamagotchi.addScore(7);
+        tamagotchi.addScore(8);
         tamagotchi.setDirty(100);
         updateMood(tamagotchi);
         return repository.save(tamagotchi);
