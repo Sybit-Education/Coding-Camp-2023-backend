@@ -325,7 +325,7 @@ public class TamagotchiService {
                 tamagotchi.setDirty(Math.max(tamagotchi.getDirty() - 0.15, 0));
                 if (!tamagotchi.isSleeping()) {
                     tamagotchi.setTired(Math.max(tamagotchi.getTired() - 0.15, 0));
-                } else if (tamagotchi.getTired() < 100) {
+                } else if (tamagotchi.getTired() < 98) {
                     tamagotchi.setTired(tamagotchi.getTired() + 3);
                 }
                 autoWakeUp(tamagotchi);
