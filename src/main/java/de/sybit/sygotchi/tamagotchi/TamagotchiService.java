@@ -45,7 +45,9 @@ public class TamagotchiService {
      */
     public Tamagotchi createTamagotchi(Tamagotchi tamagotchi) {
         // TODO: checks
-        return repository.save(tamagotchi);
+        final Tamagotchi result = repository.save(tamagotchi);
+        result.setRank(getRank(result));
+        return repository.save(result);
     }
 
     public long getRank(Tamagotchi tamagotchi) {
