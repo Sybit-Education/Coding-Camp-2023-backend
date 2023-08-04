@@ -45,7 +45,9 @@ public class TamagotchiService {
      */
     public Tamagotchi createTamagotchi(Tamagotchi tamagotchi) {
         // TODO: checks
-        return repository.save(tamagotchi);
+        final Tamagotchi result = repository.save(tamagotchi);
+        result.setRank(getRank(result));
+        return repository.save(result);
     }
 
     public long getRank(Tamagotchi tamagotchi) {
@@ -311,20 +313,20 @@ public class TamagotchiService {
      * Dirty: 0.05
      * Tired: 0.1
      */
-    @Scheduled(fixedRate = 60000) // 1 Minute
+    @Scheduled(fixedRate = 180000) // 3 Minuten
     @Async
     public void updateTamagotchi() {
         List<Tamagotchi> tamagotchis = repository.findAll();
         for (Tamagotchi tamagotchi : tamagotchis) {
             if (!tamagotchi.isDead()) {
-                tamagotchi.setHunger(Math.max(tamagotchi.getHunger() - 0.1, 0));
-                tamagotchi.setThirst(Math.max(tamagotchi.getThirst() - 0.3, 0));
-                tamagotchi.setBored(Math.max(tamagotchi.getBored() - 0.05, 0));
-                tamagotchi.setDirty(Math.max(tamagotchi.getDirty() - 0.05, 0));
+                tamagotchi.setHunger(Math.max(tamagotchi.getHunger() - 0.3, 0));
+                tamagotchi.setThirst(Math.max(tamagotchi.getThirst() - 0.9, 0));
+                tamagotchi.setBored(Math.max(tamagotchi.getBored() - 0.15, 0));
+                tamagotchi.setDirty(Math.max(tamagotchi.getDirty() - 0.15, 0));
                 if (!tamagotchi.isSleeping()) {
-                    tamagotchi.setTired(Math.max(tamagotchi.getTired() - 0.05, 0));
+                    tamagotchi.setTired(Math.max(tamagotchi.getTired() - 0.15, 0));
                 } else if (tamagotchi.getTired() < 100) {
-                    tamagotchi.setTired(tamagotchi.getTired() + 0.5);
+                    tamagotchi.setTired(tamagotchi.getTired() + 3);
                 }
                 autoWakeUp(tamagotchi);
                 updateMood(tamagotchi);
