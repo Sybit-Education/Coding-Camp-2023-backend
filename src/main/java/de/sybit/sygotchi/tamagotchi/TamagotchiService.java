@@ -149,7 +149,21 @@ public class TamagotchiService {
      */
     public Tamagotchi play() {
         Tamagotchi tamagotchi = getCurrentTamagotchi();
-        // TODO: Play with your Tamagotchi
+        if (tamagotchi.isSleeping()) {
+            throw new IllegalStateException("Your Tamagotchi is sleeping");
+        }
+
+        if (tamagotchi.getPlayCooldown() == -1) {
+            tamagotchi.setPlayCooldown(60);
+            tamagotchi.addScore(5);
+        } else {
+            throw new IllegalStateException("Your can play again in " + tamagotchi.getPlayCooldown() + " Minutes");
+        }
+        tamagotchi.setBored(Math.min(tamagotchi.getBored() + 20.0, 100.0));
+        tamagotchi.setDirty(Math.max(tamagotchi.getDirty() - 10.0, 0));
+        tamagotchi.setTired(Math.max(tamagotchi.getTired() - 10.0, 0));
+        tamagotchi.setHunger(Math.max(tamagotchi.getHunger() - 10.0, 0));
+        tamagotchi.setThirst(Math.max(tamagotchi.getThirst() - 10.0, 0));
         updateMood(tamagotchi);
         return repository.save(tamagotchi);
     }

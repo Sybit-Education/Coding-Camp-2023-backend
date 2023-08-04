@@ -103,6 +103,13 @@ public class TamagotchiController {
     public List<Tamagotchi> highscore(){
         return service.getHighScoreList();
     }
+
+    @PutMapping("play")
+    @PreAuthorize("isAuthenticated()")
+    @SecurityRequirement(name = "bearerAuth")
+    public Tamagotchi play(){
+        return service.play();
+    }
     // TODO: Implement all other methods from Service here
 
 }
