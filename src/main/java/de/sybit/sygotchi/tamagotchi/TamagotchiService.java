@@ -431,28 +431,28 @@ public class TamagotchiService {
      * @param tamagotchi the tamagotchi to update
      */
     public void updateCooldowns(Tamagotchi tamagotchi) {
-        if (tamagotchi.getDrinkCooldown() == 0) {
-            tamagotchi.setDrinkCooldown(-1);
+        if (tamagotchi.getDrinkCooldown() > 0) {
+            tamagotchi.setDrinkCooldown(-3);
         }
 
-        if (tamagotchi.getFeedCooldown() == 0) {
-            tamagotchi.setFeedCooldown(-1);
+        if (tamagotchi.getFeedCooldown() > 0) {
+            tamagotchi.setFeedCooldown(-3);
         }
 
-        if (tamagotchi.getPlayCooldown() == 0) {
-            tamagotchi.setPlayCooldown(-1);
+        if (tamagotchi.getPlayCooldown() > 0) {
+            tamagotchi.setPlayCooldown(-3);
         }
 
-        if (tamagotchi.getDrinkCooldown() != -1) {
-            tamagotchi.setDrinkCooldown(tamagotchi.getDrinkCooldown() - 1);
+        if (tamagotchi.getDrinkCooldown() > 0) {
+            tamagotchi.setDrinkCooldown(tamagotchi.getDrinkCooldown() - 3);
         }
 
-        if (tamagotchi.getFeedCooldown() != -1) {
-            tamagotchi.setFeedCooldown(tamagotchi.getFeedCooldown() - 1);
+        if (tamagotchi.getFeedCooldown() > 0) {
+            tamagotchi.setFeedCooldown(tamagotchi.getFeedCooldown() - 3);
         }
 
-        if (tamagotchi.getPlayCooldown() != -1) {
-            tamagotchi.setPlayCooldown(tamagotchi.getPlayCooldown() - 1);
+        if (tamagotchi.getPlayCooldown() > 0) {
+            tamagotchi.setPlayCooldown(tamagotchi.getPlayCooldown() - 3);
         }
     }
 
