@@ -98,8 +98,6 @@ public class TamagotchiController {
     }
 
     @GetMapping("highscore")
-    @PreAuthorize("isAuthenticated()")
-    @SecurityRequirement(name = "bearerAuth")
     public List<Tamagotchi> highscore(){
         return service.getHighScoreList();
     }
