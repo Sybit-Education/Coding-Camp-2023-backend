@@ -1,6 +1,6 @@
 # Sygotchi - Backend
 
-## Indroduction
+## Introduction
 
 This is the backend of the Sygotchi project. It is written in Java using the Spring Boot framework. The project is built using Maven.
 
